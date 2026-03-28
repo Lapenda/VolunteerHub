@@ -1,11 +1,14 @@
 ﻿
+using Microsoft.EntityFrameworkCore;
+using VolunteerHub.Database;
+using VolunteerHub.RequestModels;
 using VolunteerHub.ResponseModels;
 using VolunteerHub.Results;
 using VolunteerHub.Services.Interfaces;
 
 namespace VolunteerHub.Services
 {
-    public class AccountService() : IAccountService
+    public class AccountService(DBM context) : IAccountService
     {  
         public async Task<ServiceResult<LoginResponseModel>> Login(string username, string password)
         {
@@ -15,7 +18,7 @@ namespace VolunteerHub.Services
             });
         }
 
-        public Task Register(string username, string password)
+        public Task<ServiceResult> Register(RegisterRequestModel registerRequestModel)
         {
             throw new NotImplementedException();
         }

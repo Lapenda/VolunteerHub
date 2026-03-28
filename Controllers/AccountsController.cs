@@ -25,5 +25,12 @@ namespace VolunteerHub.Controllers
         {
             return await accountService.Login(loginRequest.Username, loginRequest.Password);
         }
+
+        [AllowAnonymous]
+        [HttpPost("register")]
+        public async Task<ServiceResult> Register([FromBody] RegisterRequestModel registerRequestModel)
+        {
+            return await accountService.Register(registerRequestModel);
+        }
     }
 }

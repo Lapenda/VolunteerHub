@@ -5,12 +5,12 @@ namespace VolunteerHub.Models
 {
     public enum Role
     {
-        Organization,
+        Admin,
         Volunteer,
         Superadmin
     }
 
-    public class User
+    public class Account
     {
         [Key]
         public string Id { get; set; }
@@ -25,16 +25,21 @@ namespace VolunteerHub.Models
 
         [Required]
         [MaxLength(200)]
+        [EmailAddress]
         public string Email { get; set; }
 
         [Required]
         [MaxLength(200)]
-        public string FullName { get; set; }
+        public string FirstName { get; set; }
+
+        [Required]
+        [MaxLength(200)]
+        public string LastName { get; set; }
 
         [Required]
         public Role Role { get; set; }
 
-        public string? OrganizationId { get; set; }
-        public virtual Organization? Organization { get; set; }
+        public ICollection<string>? OrganizationIds { get; set; }
+        public virtual ICollection<Organization>? Organizations { get; set; }
     }
 }
