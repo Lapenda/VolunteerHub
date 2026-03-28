@@ -1,6 +1,6 @@
 @VolunteerHub_HostAddress = http://localhost:5053
 
-GET {{VolunteerHub_HostAddress}}/weatherforecast/
+GET {{VolunteerHub_HostAddress}}/api/v1/accounts
 Accept: application/json
 
 ###
