@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Runtime.CompilerServices;
+using VolunteerHub.Models;
 
 namespace VolunteerHub.RequestModels
 {
@@ -24,5 +25,7 @@ namespace VolunteerHub.RequestModels
         [MaxLength(200)]
         [EmailAddress]
         public string Email { get; set; }
+
+        public Organization? Organization { get; set; }
     }
 }

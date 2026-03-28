@@ -1,20 +1,19 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Runtime.CompilerServices;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace VolunteerHub.Models
 {
-    public enum Role
+    public enum GlobalRole
     {
-        Admin,
-        Volunteer,
-        Superadmin
+        User,
+        SystemAdmin
     }
 
-    public class Account
+    public class Account : BaseModel
     {
         [Key]
-        public string Id { get; set; }
-        
+        public string Id { get; set; } = Guid.NewGuid().ToString();
+
         [Required]
         [MaxLength(200)]
         public string Username { get; set; }
@@ -37,9 +36,8 @@ namespace VolunteerHub.Models
         public string LastName { get; set; }
 
         [Required]
-        public Role Role { get; set; }
+        public GlobalRole GlobalRole { get; set; }
 
-        public ICollection<string>? OrganizationIds { get; set; }
-        public virtual ICollection<Organization>? Organizations { get; set; }
+        public virtual ICollection<OrganizationMember> Memberships { get; set; } = new List<OrganizationMember>();
     }
 }

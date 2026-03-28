@@ -1,11 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace VolunteerHub.Models
 {
-    public class Organization
+    public class Organization : BaseModel
     {
         [Key]
-        public string Id { get; set; }
+        public string Id { get; set; } = Guid.NewGuid().ToString();
 
         [Required]
         [MaxLength(200)]
@@ -14,5 +15,7 @@ namespace VolunteerHub.Models
         [Required]
         [MaxLength(200)]
         public string Email { get; set; }
+
+        public virtual ICollection<OrganizationMember> Members { get; set; } = new List<OrganizationMember>();
     }
 }

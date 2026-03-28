@@ -33,6 +33,8 @@ builder.Services.AddOpenApi();
 
 builder.Services.AddOptions();
 
+builder.Services.AddHttpContextAccessor();
+
 builder.Services.AddScoped<IAccountService, AccountService>();
 
 var app = builder.Build();

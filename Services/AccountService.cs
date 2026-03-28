@@ -1,6 +1,8 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 using VolunteerHub.Database;
+using VolunteerHub.Models;
 using VolunteerHub.RequestModels;
 using VolunteerHub.ResponseModels;
 using VolunteerHub.Results;
@@ -21,6 +23,20 @@ namespace VolunteerHub.Services
         public Task<ServiceResult> Register(RegisterRequestModel registerRequestModel)
         {
             throw new NotImplementedException();
+        }
+
+        private string GenerateToken(Account account)
+        {
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.NameIdentifier, account.Id),
+                new Claim(ClaimTypes.Name, account.Username),
+                new Claim("GlobalRole", account.GlobalRole.ToString())
+            };
+
+            var claimsIdentity = new ClaimsIdentity(claims);
+
+            return "";
         }
     }
 }
