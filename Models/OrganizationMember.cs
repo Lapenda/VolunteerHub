@@ -4,6 +4,7 @@ namespace VolunteerHub.Models
 {
     public enum OrganizationRole
     {
+        OrganizationOwner,
         Admin,
         Recruiter,
         Volunteer

@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VolunteerHub.Database;
 
@@ -10,9 +11,11 @@ using VolunteerHub.Database;
 namespace VolunteerHub.Migrations
 {
     [DbContext(typeof(DBM))]
-    partial class DBMModelSnapshot : ModelSnapshot
+    [Migration("20260328225237_RemovedRequiredOwnerFieldFromOrganization")]
+    partial class RemovedRequiredOwnerFieldFromOrganization
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -105,13 +108,13 @@ namespace VolunteerHub.Migrations
                         .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("OrganizationOwnerId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("OrganizationOwnerId")
-                        .IsUnique()
-                        .HasFilter("[OrganizationOwnerId] IS NOT NULL");
+                        .IsUnique();
 
                     b.ToTable("Organizations");
                 });
@@ -157,7 +160,8 @@ namespace VolunteerHub.Migrations
                     b.HasOne("VolunteerHub.Models.Account", "OrganizationOwner")
                         .WithOne()
                         .HasForeignKey("VolunteerHub.Models.Organization", "OrganizationOwnerId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.Navigation("OrganizationOwner");
                 });

@@ -3,21 +3,28 @@ using System.Text.Json.Serialization;
 
 namespace VolunteerHub.Results
 {
-    public class ServiceResult<T> where T : class
+    public interface IServiceResult
+    {
+        bool IsSuccess { get; set; }
+        HttpStatusCode HttpStatusCode { get; set; }
+        string? ExceptionMessage { get; set; }
+    }
+
+    public class ServiceResult<T> : IServiceResult where T : class
     {
         public T Data { get; set; }
-        public Exception? Exception { get; set; }
+        public string? ExceptionDetails { get; set; } 
         public string? ExceptionMessage { get; set; }
         public bool IsSuccess { get; set; }
-        public HttpStatusCode StatusCode { get; set; }
+        public HttpStatusCode HttpStatusCode { get; set; }
 
-        public ServiceResult(T data, bool isSuccess, HttpStatusCode statusCode, Exception? exception = null, string? exceptionMessage = null)
+        public ServiceResult(T data, bool isSuccess, HttpStatusCode statusCode, string? exceptionMessage = null, string? exception = null)
         {
             Data = data;
-            Exception = exception;
+            ExceptionDetails = exception;
             ExceptionMessage = exceptionMessage;
             IsSuccess = isSuccess;
-            StatusCode = statusCode;
+            HttpStatusCode = statusCode;
         }
 
         [JsonConstructor]
@@ -28,25 +35,25 @@ namespace VolunteerHub.Results
             return new ServiceResult<T>(data, true, HttpStatusCode.OK);
         }
 
-        public static ServiceResult<T> CreateError(bool isSuccess, Exception ex, string? exceptionMessage = null, HttpStatusCode statusCode = HttpStatusCode.BadRequest)
+        public static ServiceResult<T> CreateError(string? exceptionMessage = null, HttpStatusCode statusCode = HttpStatusCode.BadRequest, string? exception = null)
         {
-            return new ServiceResult<T>(default, false, statusCode, ex, exceptionMessage);
+            return new ServiceResult<T>(default, false, statusCode, exceptionMessage, exception);
         }
     }
 
-    public class ServiceResult
+    public class ServiceResult : IServiceResult
     {
-        public Exception? Exception { get; set; }
+        public string? ExceptionDetails { get; set; }
         public string? ExceptionMessage { get; set; }
         public bool IsSuccess { get; set; }
-        public HttpStatusCode StatusCode { get; set; }
+        public HttpStatusCode HttpStatusCode { get; set; }
 
-        public ServiceResult(bool isSuccess, HttpStatusCode statusCode, Exception? exception = null, string? exceptionMessage = null)
+        public ServiceResult(bool isSuccess, HttpStatusCode statusCode, string? exceptionMessage = null, string? exception = null)
         {
-            Exception = exception;
+            ExceptionDetails = exception;
             ExceptionMessage = exceptionMessage;
             IsSuccess = isSuccess;
-            StatusCode = statusCode;
+            HttpStatusCode = statusCode;
         }
 
         [JsonConstructor]
@@ -57,9 +64,9 @@ namespace VolunteerHub.Results
             return new ServiceResult(true, HttpStatusCode.OK);
         }
 
-        public static ServiceResult CreateError(bool isSuccess, Exception ex, string? exceptionMessage = null, HttpStatusCode statusCode = HttpStatusCode.BadRequest)
+        public static ServiceResult CreateError(string? exceptionMessage = null, HttpStatusCode statusCode = HttpStatusCode.BadRequest, string? exception = null)
         {
-            return new ServiceResult(false, statusCode, ex, exceptionMessage);
+            return new ServiceResult(false, statusCode, exceptionMessage, exception);
         }
     }
 }

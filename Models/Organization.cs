@@ -16,6 +16,9 @@ namespace VolunteerHub.Models
         [MaxLength(200)]
         public string Email { get; set; }
 
+        public string? OrganizationOwnerId { get; set; }
+        public virtual Account? OrganizationOwner { get; set; }
+
         public virtual ICollection<OrganizationMember> Members { get; set; } = new List<OrganizationMember>();
     }
 }

@@ -12,7 +12,7 @@ namespace VolunteerHub.Controllers
 {
     public class AccountsController(IAccountService accountService) : VolunteerBaseController
     {
-        [Authorize]
+        [Authorize(Policy="AdminOnly")]
         [HttpGet]
         public ActionResult<String> Get()
         {

@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VolunteerHub.Database;
 
@@ -10,9 +11,11 @@ using VolunteerHub.Database;
 namespace VolunteerHub.Migrations
 {
     [DbContext(typeof(DBM))]
-    partial class DBMModelSnapshot : ModelSnapshot
+    [Migration("20260328225401_RemovedRequiredOwnerFieldFromOrganizationAgain")]
+    partial class RemovedRequiredOwnerFieldFromOrganizationAgain
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
